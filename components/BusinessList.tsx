@@ -24,7 +24,7 @@ export const BusinessList = ({ businesses }: BusinessListProps) => {
     );
   }
   return (
-    <div className="flex flex-col bg-white">
+    <div className="flex flex-col bg-white pt-8">
       <h2 className="text-3xl font-semibold text-center py-6 text-primaryColor">
         Businesses
       </h2>

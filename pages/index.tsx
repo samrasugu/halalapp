@@ -10,6 +10,8 @@ const inter = Urbanist({ subsets: ["latin"] });
 
 export default function Home() {
   const [businesses, setBusinesses] = useState<Business[]>([]);
+  const [originalBusinesses, setOriginalBusinesses] = useState<Business[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -17,6 +19,7 @@ export default function Home() {
         const response = await fetch("/api/businesses");
         const data = await response.json();
         setBusinesses(data);
+        setOriginalBusinesses(data);
       } catch (error) {
         console.error("Error fetching businesses:", error);
       }
@@ -39,19 +42,38 @@ export default function Home() {
 
       const response = await fetch(`/api/search?${queryParams.toString()}`);
       const data = await response.json();
+      if (data.length === 0) {
+        console.log(data);
+        setError("No businesses found matching the search criteria.");
+      } else {
+        setError(null);
+        setBusinesses(data);
+      }
       setBusinesses(data);
-      // clear search criteria
     } catch (error) {
       console.error("Error fetching businesses:", error);
     }
   };
 
+  const showOriginalList = () => {
+    setBusinesses(originalBusinesses);
+    setError(null);
+  };
+
   return (
     <div>
       <NavBar />
-      <HeroSection
-        onSearch={handleSearch}
-      />
+      <HeroSection onSearch={handleSearch} />
+      {error && (
+        <div className="bg-white text-white text-center px-4 pt-8">
+          <button
+            className="bg-primaryColor py-2 px-8 rounded-md text-white"
+            onClick={showOriginalList}
+          >
+            OK
+          </button>
+        </div>
+      )}
       <BusinessList businesses={businesses} />
     </div>
   );

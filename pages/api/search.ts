@@ -29,7 +29,6 @@ export default async function handler(
       }
 
       const businesses = await fetch(url);
-      console.log(businesses);
       const data = await businesses.json();
 
       res.status(200).json(data);
