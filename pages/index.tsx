@@ -25,10 +25,33 @@ export default function Home() {
     fetchBusinesses();
   }, []);
 
+  const handleSearch = async (searchCriteria: {
+    searchTerm: string;
+    category: string;
+    location: string;
+  }) => {
+    try {
+      const { searchTerm, category, location } = searchCriteria;
+      const queryParams = new URLSearchParams();
+      if (location) queryParams.append("location", location);
+      if (searchTerm) queryParams.append("searchTerm", searchTerm);
+      if (category) queryParams.append("category", category);
+
+      const response = await fetch(`/api/search?${queryParams.toString()}`);
+      const data = await response.json();
+      setBusinesses(data);
+      // clear search criteria
+    } catch (error) {
+      console.error("Error fetching businesses:", error);
+    }
+  };
+
   return (
     <div>
       <NavBar />
-      <HeroSection />
+      <HeroSection
+        onSearch={handleSearch}
+      />
       <BusinessList businesses={businesses} />
     </div>
   );

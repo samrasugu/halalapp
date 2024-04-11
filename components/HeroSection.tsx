@@ -1,9 +1,27 @@
 import React, { useState } from "react";
 
-export const HeroSection = () => {
+interface HeroSectionProps {
+  onSearch: (searchData: {
+    searchTerm: string;
+    category: string;
+    location: string;
+  }) => void;
+}
+
+export const HeroSection = ({ onSearch }: HeroSectionProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
   const [location, setLocation] = useState("");
+
+  const handleSearch = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    onSearch({ searchTerm, category, location });
+    // clear search criteria
+    setSearchTerm("");
+    setCategory("");
+    setLocation("");
+  };
+
   return (
     <div
       className="relative h-screen bg-cover bg-center"
@@ -22,7 +40,7 @@ export const HeroSection = () => {
           </button>
         </div>
         <div className="bg-white p-6 rounded-lg w-auto mx-20">
-          <form action="" className="flex flex-wrap">
+          <form onSubmit={handleSearch} action="" className="flex flex-wrap">
             <input
               type="text"
               placeholder="Search term"
@@ -36,10 +54,10 @@ export const HeroSection = () => {
               className="px-4 py-2 mb-4 mr-4 border text-gray-600 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select category</option>
-              <option value="restaurant">Restaurant</option>
-              <option value="grocery">Business</option>
-              <option value="beauty">Beauty</option>
-              <option value="art">Art</option>
+              <option value="Restaurant">Restaurant</option>
+              <option value="Business">Business</option>
+              <option value="Beauty">Beauty</option>
+              <option value="Art">Art</option>
             </select>
             <select
               value={location}

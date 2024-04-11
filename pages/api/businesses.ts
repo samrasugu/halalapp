@@ -7,7 +7,6 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const businesses = await fetch(`${API_URL}/`);
-    console.log(businesses);
     const data = await businesses.json();
 
     res.status(200).json(data);
