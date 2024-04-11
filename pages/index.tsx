@@ -5,6 +5,7 @@ import { NavBar } from "@/components/NavBar";
 import { use, useEffect, useState } from "react";
 import { Business } from "@/typing.t";
 import { BusinessList } from "@/components/BusinessList";
+import { Footer } from "@/components/Footer";
 
 const inter = Urbanist({ subsets: ["latin"] });
 
@@ -75,6 +76,7 @@ export default function Home() {
         </div>
       )}
       <BusinessList businesses={businesses} />
+      <Footer />
     </div>
   );
 }

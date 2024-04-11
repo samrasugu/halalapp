@@ -38,9 +38,9 @@ export const BusinessList = ({ businesses }: BusinessListProps) => {
   return (
     <div className="flex flex-col bg-white py-8">
       <h2 className="text-3xl font-semibold text-center py-6 text-primaryColor">
-        Businesses
+        Discover
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-6 px-20 bg-white">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-6 md:px-20 px-10 bg-white">
         {currentBusinesses.map((business) => (
           <div
             key={business._id}
